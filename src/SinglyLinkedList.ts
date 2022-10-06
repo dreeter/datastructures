@@ -1,14 +1,14 @@
-import { NodeSL } from "./Node.js";
+import { SLNode } from "./SLNode.js";
 
 export class SinglyLinkedList<T> {
   constructor(
-    private head: NodeSL<T> | null = null,
-    private tail: NodeSL<T> | null = null,
+    private head: SLNode<T> | null = null,
+    private tail: SLNode<T> | null = null,
     private length: number = 0
   ) {}
 
   push(data: T) {
-    const newNode: NodeSL<T> = new NodeSL<T>(data, null);
+    const newNode: SLNode<T> = new SLNode<T>(data, null);
 
     if (!this.length) {
       this.head = newNode;
@@ -26,13 +26,13 @@ export class SinglyLinkedList<T> {
   pop() {
     if (!this.head) return undefined;
 
-    const poppedNode: NodeSL<T> | null = this.tail;
+    const poppedNode: SLNode<T> | null = this.tail;
 
     if (this.head === this.tail) {
       this.head = null;
       this.tail = null;
     } else {
-      let currentNode: NodeSL<T> | null = this.head;
+      let currentNode: SLNode<T> | null = this.head;
 
       while (currentNode.nextNode) {
         if (currentNode.nextNode === this.tail) {
@@ -53,7 +53,7 @@ export class SinglyLinkedList<T> {
   shift() {
     if (!this.head) return undefined;
 
-    const shiftedNode: NodeSL<T> | null = this.head;
+    const shiftedNode: SLNode<T> | null = this.head;
 
     if (this.head === this.tail) {
       this.head = null;
@@ -70,8 +70,8 @@ export class SinglyLinkedList<T> {
   unshift(data: T) {
     if (!this.head) return this.push(data);
 
-    const previousHead: NodeSL<T> | null = this.head;
-    const newHead: NodeSL<T> | null = new NodeSL<T>(data, previousHead);
+    const previousHead: SLNode<T> | null = this.head;
+    const newHead: SLNode<T> | null = new SLNode<T>(data, previousHead);
 
     this.head = newHead;
     this.length++;
@@ -85,7 +85,7 @@ export class SinglyLinkedList<T> {
     if (!this.length) return undefined;
 
     let currentPosition: number = 0;
-    let currentNode: NodeSL<T> | null = this.head;
+    let currentNode: SLNode<T> | null = this.head;
 
     while (currentPosition < position) {
       currentPosition++;
@@ -96,7 +96,7 @@ export class SinglyLinkedList<T> {
   }
 
   set(position: number, data: T) {
-    const nodeToSet: NodeSL<T> | undefined | null = this.get(position);
+    const nodeToSet: SLNode<T> | undefined | null = this.get(position);
 
     if (nodeToSet) {
       nodeToSet.data = data;
@@ -112,10 +112,10 @@ export class SinglyLinkedList<T> {
 
     if (position < 0 || position > this.length) return false;
 
-    const prevNode: NodeSL<T> | null | undefined = this.get(position - 1);
+    const prevNode: SLNode<T> | null | undefined = this.get(position - 1);
 
     if (prevNode && prevNode.nextNode) {
-      const newNode: NodeSL<T> = new NodeSL<T>(data, prevNode.nextNode);
+      const newNode: SLNode<T> = new SLNode<T>(data, prevNode.nextNode);
       prevNode.nextNode = newNode;
       this.length++;
       return true;
@@ -130,7 +130,7 @@ export class SinglyLinkedList<T> {
     if (position === 0) return !!this.shift();
     if (position === this.length - 1) return !!this.pop();
 
-    const prevNode: NodeSL<T> | undefined | null = this.get(position - 1);
+    const prevNode: SLNode<T> | undefined | null = this.get(position - 1);
 
     if (prevNode && prevNode.nextNode) {
       if (prevNode.nextNode.nextNode === null) {
@@ -148,14 +148,14 @@ export class SinglyLinkedList<T> {
   reverse() {
     if (this.head === this.tail || !this.head) return this;
 
-    let next: NodeSL<T> | null = this.head.nextNode;
-    let prev: NodeSL<T> | null = this.head;
+    let next: SLNode<T> | null = this.head.nextNode;
+    let prev: SLNode<T> | null = this.head;
 
     this.head.nextNode = null;
     this.tail = this.head;
 
     while (next) {
-      const newNext: NodeSL<T> | null = next.nextNode;
+      const newNext: SLNode<T> | null = next.nextNode;
 
       next.nextNode = prev;
 

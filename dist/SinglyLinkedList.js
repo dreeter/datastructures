@@ -1,4 +1,4 @@
-import { NodeSL } from "./Node.js";
+import { SLNode } from "./SLNode.js";
 export class SinglyLinkedList {
     constructor(head = null, tail = null, length = 0) {
         this.head = head;
@@ -6,7 +6,7 @@ export class SinglyLinkedList {
         this.length = length;
     }
     push(data) {
-        const newNode = new NodeSL(data, null);
+        const newNode = new SLNode(data, null);
         if (!this.length) {
             this.head = newNode;
             this.tail = newNode;
@@ -60,7 +60,7 @@ export class SinglyLinkedList {
         if (!this.head)
             return this.push(data);
         const previousHead = this.head;
-        const newHead = new NodeSL(data, previousHead);
+        const newHead = new SLNode(data, previousHead);
         this.head = newHead;
         this.length++;
         return this;
@@ -95,7 +95,7 @@ export class SinglyLinkedList {
             return false;
         const prevNode = this.get(position - 1);
         if (prevNode && prevNode.nextNode) {
-            const newNode = new NodeSL(data, prevNode.nextNode);
+            const newNode = new SLNode(data, prevNode.nextNode);
             prevNode.nextNode = newNode;
             this.length++;
             return true;
