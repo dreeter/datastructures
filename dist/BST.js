@@ -53,22 +53,25 @@ export class BST {
         }
         return true;
     }
-    BFS() {
-        const nodesToVisit = [];
-        const data = [];
+    BFS(nodes = null) {
+        let data = [];
+        let children = [];
         if (!this.root)
-            return [];
-        nodesToVisit.push(this.root);
-        while (nodesToVisit.length) {
-            const dequeuedNode = nodesToVisit.shift();
-            if (dequeuedNode) {
-                data.push(dequeuedNode.data);
-                if (dequeuedNode.leftNode)
-                    nodesToVisit.push(dequeuedNode.leftNode);
-                if (dequeuedNode.rightNode)
-                    nodesToVisit.push(dequeuedNode.rightNode);
-            }
+            return data;
+        if (!nodes) {
+            nodes = [];
+            nodes.push(this.root);
         }
+        if (!nodes.length)
+            return data;
+        nodes.forEach((node) => {
+            data.push(node.data);
+            if (node.leftNode)
+                children.push(node.leftNode);
+            if (node.rightNode)
+                children.push(node.rightNode);
+        });
+        data.push(...this.BFS(children));
         return data;
     }
     DFS(node = this.root, order = DFSORDER.PREORDER) {

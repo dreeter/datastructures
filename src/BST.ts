@@ -60,24 +60,28 @@ export class BST<T> {
     return true;
   }
 
-  BFS() {
-    const nodesToVisit: BSTNode<T>[] = [];
-    const data: T[] = [];
+  BFS(nodes: BSTNode<T>[] | null = null): T[] {
+    let data: T[] = [];
+    let children: BSTNode<T>[] = [];
 
-    if (!this.root) return [];
-    nodesToVisit.push(this.root);
+    if (!this.root) return data;
 
-    while (nodesToVisit.length) {
-      const dequeuedNode: BSTNode<T> | undefined = nodesToVisit.shift();
-
-      if (dequeuedNode) {
-        data.push(dequeuedNode.data);
-
-        if (dequeuedNode.leftNode) nodesToVisit.push(dequeuedNode.leftNode);
-
-        if (dequeuedNode.rightNode) nodesToVisit.push(dequeuedNode.rightNode);
-      }
+    if (!nodes) {
+      nodes = [];
+      nodes.push(this.root);
     }
+
+    if (!nodes.length) return data;
+
+    nodes.forEach((node) => {
+      data.push(node.data);
+
+      if (node.leftNode) children.push(node.leftNode);
+
+      if (node.rightNode) children.push(node.rightNode);
+    });
+
+    data.push(...this.BFS(children));
 
     return data;
   }
