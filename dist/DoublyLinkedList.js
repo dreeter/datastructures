@@ -71,25 +71,47 @@ export class DoublyLinkedList {
         const newNode = new DLNode(data, this.head, null);
         this.head.prevNode = newNode;
         this.head = newNode;
+        this.length++;
         return this;
     }
-    get() {
-        //return node
+    get(position) {
+        if (position < 0 || position > this.length - 1)
+            return undefined;
+        if (!this.head)
+            return undefined;
+        let currentPosition = 0;
+        let currentNode = this.head;
+        while (currentPosition < position) {
+            currentPosition++;
+            if (currentNode.nextNode) {
+                currentNode = currentNode.nextNode;
+            }
+        }
+        return currentNode;
     }
-    set() {
-        //return boolean
+    set(data, position) {
+        if (position < 0 || position > this.length - 1)
+            return false;
+        const targetNode = this.get(position);
+        if (!targetNode)
+            return false;
+        targetNode.data = data;
+        return true;
     }
-    insert() {
-        //return boolean
-    }
-    remove() {
-        //return boolean
+    insert(data, position) {
+        if (position < 0 || position > this.length)
+            return false;
+        if (position === this.length)
+            return !!this.push(data);
+        if (position === 0)
+            return !!this.unshift(data);
+        const prevNode = this.get(position - 1);
+        if (prevNode) {
+            const newNode = new DLNode(data, prevNode.nextNode, prevNode);
+            prevNode.nextNode.prevNode = newNode;
+            prevNode.nextNode = newNode;
+        }
+        return true;
     }
 }
 const DLL = new DoublyLinkedList();
-DLL.push(10);
-DLL.push(5);
-DLL.push(35);
-DLL.unshift(11);
-DLL.unshift(45);
-DLL.print();

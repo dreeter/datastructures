@@ -1,5 +1,5 @@
 export class SLNode {
-    constructor(data, nextNode) {
+    constructor(data, nextNode = null) {
         this.data = data;
         this.nextNode = nextNode;
     }
